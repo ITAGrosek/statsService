@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  stats-service:  # Preimenovano iz "app" za jasnost
+    build: .
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mongo
+    networks:
+      - backend-network
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "30000:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    external: true
+
+volumes:
+  mongo-data:
